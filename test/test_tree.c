@@ -32,6 +32,27 @@ void test_binary_tree(void)
   assert(y->right == 0);
   assert(x->left == y);
 
+  printf("test insert several nodes: 15, 17, 10, 30, 77, 100\n");
+  binary_tree_insert(&tree, 15);
+  binary_tree_insert(&tree, 17);
+  binary_tree_insert(&tree, 10);
+  binary_tree_insert(&tree, 30);
+  binary_tree_insert(&tree, 77);
+  binary_tree_insert(&tree, 100);
+
+  printf("test pre-order traversal: ");
+  int foo[8];
+  binary_tree_preorder(tree, foo);
+  printf("\n");
+
+  printf("test in-order traversal:  ");
+  binary_tree_inorder(tree, foo);
+  printf("\n");
+
+  printf("test post-order traversal:");
+  binary_tree_postorder(tree, foo);
+  printf("\n");
+
   binary_tree_free(tree);
 }
 

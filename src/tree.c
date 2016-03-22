@@ -53,7 +53,6 @@ void binary_tree_insert(BinaryTree** tree, int key)
     previous->right = current;
 }
 
-
 void binary_tree_free(BinaryTree* tree)
 {
   BinaryTree* left;
@@ -65,4 +64,32 @@ void binary_tree_free(BinaryTree* tree)
     binary_tree_free(tree->right);
 
   free(tree);
+}
+
+void binary_tree_preorder(BinaryTree* tree, int* values)
+{
+  if (tree->left != 0)
+    binary_tree_preorder(tree->left, values);
+  if (tree->right != 0)
+    binary_tree_preorder(tree->right, values);
+  if (tree != 0)
+    printf(" %d", tree->key);
+}
+void binary_tree_inorder(BinaryTree* tree, int* values)
+{
+  if (tree->left != 0)
+    binary_tree_preorder(tree->left, values);
+  if (tree != 0)
+    printf(" %d", tree->key);
+  if (tree->right != 0)
+    binary_tree_preorder(tree->right, values);
+}
+void binary_tree_postorder(BinaryTree* tree, int* values)
+{
+  if (tree != 0)
+    printf(" %d", tree->key);
+  if (tree->left != 0)
+    binary_tree_preorder(tree->left, values);
+  if (tree->right != 0)
+    binary_tree_preorder(tree->right, values);
 }
