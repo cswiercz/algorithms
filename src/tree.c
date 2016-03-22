@@ -1,10 +1,11 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "algorithms/tree.h"
 
-BinaryTree* binary_tree_search(BinaryTree* tree, int k)
+BinaryTreeNode* binary_tree_search(BinaryTree* tree, int k)
 {
-  BinaryTree* x = tree;
+  BinaryTreeNode* x = tree->root;
 
   while (x != 0) {
     if (k < x->key)
@@ -14,26 +15,28 @@ BinaryTree* binary_tree_search(BinaryTree* tree, int k)
     else
       return x;
     }
-  return tree;
+
+  return NULL;
 }
 
-void binary_tree_insert(BinaryTree** tree, int key)
+void binary_tree_insert(BinaryTree* tree, int key)
 {
-  BinaryTree* current = *tree;
-  BinaryTree* previous = *tree;
+  BinaryTreeNode* current = tree->root;
+  BinaryTreeNode* previous = tree->root;
+  BinaryTreeNode* x = (BinaryTreeNode*)malloc(sizeof(BinaryTreeNode));
+  x->key = key;
+  x->left = NULL;
+  x->right = NULL;
+  tree->size++;
 
-  // root case: empty tree
-  if (current == 0) {
-    (*tree) = (BinaryTree*)malloc(sizeof(BinaryTree));
-    (*tree)->key = key;
-    (*tree)->parent = 0;
-    (*tree)->left = 0;
-    (*tree)->right = 0;
+  // empty tree case
+  if (tree->root == NULL) {
+    tree->root = x;
     return;
   }
 
   // traverse to the bottom of the tree
-  while (current != 0) {
+  while (current != NULL) {
     previous = current;
     if (key < current->key)
       current = current->left;
@@ -42,54 +45,59 @@ void binary_tree_insert(BinaryTree** tree, int key)
   }
 
   // current is now NULL and previous was its parent
-  current = (BinaryTree*)malloc(sizeof(BinaryTree));
-  current->key = key;
-  current->parent = previous;
-  current->left = 0;
-  current->right = 0;
+  current = x;
   if (key < previous->key)
     previous->left = current;
   else
     previous->right = current;
 }
 
+void binary_tree_free_node(BinaryTreeNode* x)
+{
+  if (x->left != NULL)
+    binary_tree_free_node(x->left);
+  if (x->right != NULL)
+    binary_tree_free_node(x->right);
+  free(x);
+}
 void binary_tree_free(BinaryTree* tree)
 {
-  BinaryTree* left;
-  BinaryTree* right;
-
-  if (tree->left != 0)
-    binary_tree_free(tree->left);
-  if (tree->right != 0)
-    binary_tree_free(tree->right);
-
+  binary_tree_free_node(tree->root);
   free(tree);
 }
 
+// return a pre-ordering of the tree
+//
+int binary_tree_preorder_node(BinaryTreeNode* x, int* values,
+                               int index)
+{
+  if (x->left != NULL)
+    index = binary_tree_preorder_node(x->left, values, index);
+  if (x->right != NULL)
+    index = binary_tree_preorder_node(x->right, values, index);
+  if (x != NULL)
+    values[index] = x->key;
+  return index+1;
+}
 void binary_tree_preorder(BinaryTree* tree, int* values)
 {
-  if (tree->left != 0)
-    binary_tree_preorder(tree->left, values);
-  if (tree->right != 0)
-    binary_tree_preorder(tree->right, values);
-  if (tree != 0)
-    printf(" %d", tree->key);
+  binary_tree_preorder_node(tree->root, values, 0);
 }
-void binary_tree_inorder(BinaryTree* tree, int* values)
+
+// return a post-ordering of the tree
+//
+int binary_tree_postorder_node(BinaryTreeNode* x, int* values,
+                               int index)
 {
-  if (tree->left != 0)
-    binary_tree_preorder(tree->left, values);
-  if (tree != 0)
-    printf(" %d", tree->key);
-  if (tree->right != 0)
-    binary_tree_preorder(tree->right, values);
+  if (x != NULL)
+    values[index] = x->key;
+  if (x->left != NULL)
+    index = binary_tree_postorder_node(x->left, values, index+1);
+  if (x->right != NULL)
+    index = binary_tree_postorder_node(x->right, values, index+1);
+  return index;
 }
 void binary_tree_postorder(BinaryTree* tree, int* values)
 {
-  if (tree != 0)
-    printf(" %d", tree->key);
-  if (tree->left != 0)
-    binary_tree_preorder(tree->left, values);
-  if (tree->right != 0)
-    binary_tree_preorder(tree->right, values);
+  binary_tree_postorder_node(tree->root, values, 0);
 }

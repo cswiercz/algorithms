@@ -1,16 +1,23 @@
+#include <stdlib.h>
+
 #ifndef __ALGORITHMS_TREE_H
 #define __ALGORITHMS_TREE_H
 
-typedef struct BinaryTree
+typedef struct BinaryTreeNode
 {
   int key;
-  struct BinaryTree* parent;
-  struct BinaryTree* left;
-  struct BinaryTree* right;
+  struct BinaryTreeNode* left;
+  struct BinaryTreeNode* right;
+} BinaryTreeNode;
+
+typedef struct
+{
+  size_t size;
+  BinaryTreeNode* root;
 } BinaryTree;
 
-BinaryTree* binary_tree_search(BinaryTree*, int);
-void binary_tree_insert(BinaryTree**, int);
+BinaryTreeNode* binary_tree_search(BinaryTree*, int);
+void binary_tree_insert(BinaryTree*, int);
 void binary_tree_free(BinaryTree*);
 void binary_tree_preorder(BinaryTree*, int*);
 void binary_tree_inorder(BinaryTree*, int*);
