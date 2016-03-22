@@ -3,15 +3,15 @@
 #include <assert.h>
 #include "algorithms/list.h"
 
-Node* list_search(List l, int k)
+ListNode* list_search(List l, int k)
 {
-  Node *x = l.head;
+  ListNode *x = l.head;
   while ((x != NULL) && (x->key != k))
       x = x->next;
   return x;
 }
 
-void list_insert_node(List* l, Node* x)
+void list_insert_node(List* l, ListNode* x)
 {
   x->next = l->head;
   if (l->head != NULL)
@@ -22,16 +22,16 @@ void list_insert_node(List* l, Node* x)
 
 void list_insert(List* l, int k)
 {
-  Node* x = (Node*)malloc(sizeof(Node));
+  ListNode* x = (ListNode*)malloc(sizeof(ListNode));
   x->key = k;
   list_insert_node(l, x);
 }
 
-void list_delete(List* l, Node* x)
+void list_delete(List* l, ListNode* x)
 {
   if (x->prev != NULL)
     x->prev->next = x->next;
-  else // x is head
+  else
     l->head = x->next;
 
   if (x->next != NULL)
@@ -40,7 +40,7 @@ void list_delete(List* l, Node* x)
 
 void list_print(List l)
 {
-  Node* x = l.head;
+  ListNode* x = l.head;
   printf("\n[");
   while (x != NULL)
     {
@@ -52,8 +52,8 @@ void list_print(List l)
 
 void list_free(List l)
 {
-  Node* x = l.head;
-  Node* y = l.head;
+  ListNode* x = l.head;
+  ListNode* y = l.head;
   while (x != NULL)
     {
       free(x);

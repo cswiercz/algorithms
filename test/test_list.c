@@ -4,10 +4,12 @@
 
 void test_list(void)
 {
-  List l, m;
+  List l;
+  ListNode* x;
+  ListNode* y;
 
   printf("\ntesting null list...");
-  assert(m.head == NULL);
+  assert(l.head == NULL);
 
   printf("\ntesting insert...");
   list_insert(&l, 1);
@@ -18,9 +20,9 @@ void test_list(void)
   list_print(l);
 
   printf("\ntesting search...");
-  Node* x = list_search(l, 42);
+  x = list_search(l, 42);
   assert(x == NULL);
-  Node* y = list_search(l, 2);
+  y = list_search(l, 2);
   assert(y->key == 2);
 
   printf("\ntesting deletion...");

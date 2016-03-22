@@ -2,41 +2,41 @@
 #define __ALGORITHMS_LIST_H
 
 // A Node of a doubly-linked list
-typedef struct Node
+typedef struct ListNode
 {
   int key;
-  struct Node* prev;
-  struct Node* next;
-} Node;
+  struct ListNode* prev;
+  struct ListNode* next;
+} ListNode;
 
 // A doubly-linked list.
 typedef struct List
 {
-  Node* head;
+  ListNode* head;
 } List;
 
 
-// Returns a reference to a Node with a matching key.
+// Returns a reference to a ListNode with a matching key.
 //
 // Note that the reference returned is to the first occurrence of the key in the
 // List.
-Node* list_search(List, int);
+ListNode* list_search(List, int);
 
-// Inserts a Node with the given key into the List.
+// Inserts a ListNode with the given key into the List.
 //
 // Insertion is done at the head of the list. Internally, a function
 // list_insert_node is called where a node is created containing the given key.
 void list_insert(List*, int);
 
-// Deletes a Node from the List.
-void list_delete(List*, Node*);
+// Deletes a ListNode from the List.
+void list_delete(List*, ListNode*);
 
 // Prints a list.
 void list_print(List);
 
 // "Frees" a list.
 //
-// A helper function that frees each Node within a list.
+// A helper function that frees each ListNode within a list.
 void list_free(List);
 
 #endif
