@@ -38,19 +38,53 @@ void test_binary_tree(void)
   binary_tree_insert(tree, 30);
   binary_tree_insert(tree, 77);
   binary_tree_insert(tree, 100);
+  binary_tree_insert(tree, 50);
 
   printf("test pre-order traversal:  ");
-  int foo[8];
-  binary_tree_preorder(tree, foo);
-  for (int k=0; k<8; ++k)
-    printf("%d ", foo[k]);
+  int values[9];
+  binary_tree_preorder(tree, values);
+  for (int k=0; k<9; ++k)
+    printf("%d ", values[k]);
   printf("\n");
+  assert(values[0] == 42);
+  assert(values[1] == 20);
+  assert(values[2] == 15);
+  assert(values[3] == 10);
+  assert(values[4] == 17);
+  assert(values[5] == 30);
+  assert(values[6] == 77);
+  assert(values[7] == 50);
+  assert(values[8] == 100);
 
   printf("test post-order traversal: ");
-  binary_tree_postorder(tree, foo);
-  for (int k=0; k<8; ++k)
-    printf("%d ", foo[k]);
+  binary_tree_postorder(tree, values);
+  for (int k=0; k<9; ++k)
+    printf("%d ", values[k]);
   printf("\n");
+  assert(values[0] == 10);
+  assert(values[1] == 17);
+  assert(values[2] == 15);
+  assert(values[3] == 30);
+  assert(values[4] == 20);
+  assert(values[5] == 50);
+  assert(values[6] == 100);
+  assert(values[7] == 77);
+  assert(values[8] == 42);
+
+  printf("test breadth-first-search: ");
+  binary_tree_BFS(tree, values);
+  for (int k=0; k<9; ++k)
+    printf("%d ", values[k]);
+  printf("\n");
+  assert(values[0] == 42);
+  assert(values[1] == 20);
+  assert(values[2] == 77);
+  assert(values[3] == 15);
+  assert(values[4] == 30);
+  assert(values[5] == 50);
+  assert(values[6] == 100);
+  assert(values[7] == 10);
+  assert(values[8] == 17);
 
   binary_tree_free(tree);
 }

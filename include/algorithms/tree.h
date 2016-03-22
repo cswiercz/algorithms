@@ -20,7 +20,7 @@ BinaryTreeNode* binary_tree_search(BinaryTree*, int);
 void binary_tree_insert(BinaryTree*, int);
 void binary_tree_free(BinaryTree*);
 void binary_tree_preorder(BinaryTree*, int*);
-void binary_tree_inorder(BinaryTree*, int*);
 void binary_tree_postorder(BinaryTree*, int*);
+void binary_tree_BFS(BinaryTree*, int*);
 
 #endif
