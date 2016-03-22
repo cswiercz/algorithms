@@ -9,4 +9,5 @@ endfunction(algorithms_test)
 algorithms_test(
   test_list
   test_tree
+  test_queue
 )
