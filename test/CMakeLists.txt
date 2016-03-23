@@ -10,4 +10,5 @@ algorithms_test(
   test_list
   test_tree
   test_queue
+  test_sort
 )
