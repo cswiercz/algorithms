@@ -75,6 +75,48 @@ void merge_sort(T* array, size_t length)
 }
 
 
+size_t partition(T* array, size_t left, size_t right)
+{
+  size_t sep = left;
+  T pivot = array[right];
+  T current, temp;
+
+  for (size_t i=left; i<right; ++i)
+    {
+      current = array[i];
+      if (current <= pivot) {
+        // swap with sep pointer
+        temp = array[sep];
+        array[sep] = current;
+        array[i] = temp;
+
+        // move forward one
+        sep++;
+      }
+    }
+
+  // swap the pivot (last element) with the sep
+  temp = array[sep];
+  array[sep] = pivot;
+  array[right] = temp;
+  return sep;
+}
+
+void quick(T* array, size_t left, size_t right)
+{
+  size_t mid;
+  if (left < right) {
+    mid = partition(array, left, right);
+    quick(array, left, mid-1);
+    quick(array, mid+1, right);
+  }
+}
+void quick_sort(T* array, size_t length)
+{
+  quick(array, 0, length-1);
+}
+
+
 int main(int argc, char** argv)
 {
   printf("== Testing Sort ==\n");
@@ -82,7 +124,7 @@ int main(int argc, char** argv)
   T sorted[10] = {1,2,3,4,5,6,7,8,9,10};
 
   printf("sorting...\n");
-  merge_sort(array, 10);
+  quick_sort(array, 10);
 
   printf("testing...\n");
   assert(arrays_equal(array, sorted, 10));
