@@ -49,5 +49,25 @@ int main(int argc, char** argv)
   assert(Z(0,0) == -42);
   r1 = 0;
 
+  // -------------------- test references
+  std::cout << "...testing references" << std::endl;
+  Matrix<int>& R = B;
+  R(0,1) = 1;
+
+  // -------------------- test equality
+  std::cout << "...testing equality" << std::endl;
+  Matrix<int> C = zero_matrix<int>(2,2);
+  Matrix<int> D(2,2);
+
+  C(0,0) = 1; D(0,0) = 1;
+  C(0,1) = 2; D(0,1) = 2;
+  C(1,0) = 3; D(1,0) = 3;
+  C(1,1) = 4; D(1,1) = 4;
+  assert(C == D);
+
+  D(0,0) = 0;
+  assert(C != D);
+  assert(C != Z);
+
   std::cout << "===-----   Done   -----===" << std::endl;
 }

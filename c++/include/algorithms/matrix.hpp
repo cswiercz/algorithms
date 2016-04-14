@@ -59,7 +59,7 @@ private:
 };
 
 
-/* ---------------------------- Matrix Functions ---------------------------- */
+// ---------------------------------------- Functions
 template <class T>
 Matrix<T>::Matrix(const size_t &M, const size_t &N)
   :
@@ -76,6 +76,8 @@ std::tuple<size_t,size_t> Matrix<T>::shape() const
   return std::make_tuple(nrows_, ncols_);
 }
 
+
+// ---------------------------------------- Operators
 template <class T>
 std::ostream& operator<<(std::ostream& out, const Matrix<T>& A)
 {
@@ -118,6 +120,32 @@ T& Matrix<T>::operator[](size_t index)
 {
   return data_[index];
 }
+
+template <class T>
+inline bool operator==(const Matrix<T>& lhs, const Matrix<T>& rhs)
+{
+  // cheap test: dimensions match
+  int lhs_M, lhs_N;
+  int rhs_M, rhs_N;
+  std::tie(lhs_M,lhs_N) = lhs.shape();
+  std::tie(rhs_M,rhs_N) = rhs.shape();
+  if ((lhs_M != rhs_N) || (lhs_N != rhs_N))
+    return false;
+
+  // check element-wise
+  size_t size = lhs_M * lhs_N;
+  for (size_t i=0; i<size; ++i)
+    if (lhs[i] != rhs[i])
+      return false;
+  return true;
+}
+
+template <class T>
+inline bool operator!=(const Matrix<T>& lhs, const Matrix<T>& rhs)
+{
+  return !(lhs == rhs);
+}
+
 
 
 /* ---------------------------- Helper Functions ---------------------------- */
