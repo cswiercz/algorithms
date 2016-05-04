@@ -8,4 +8,6 @@ endfunction(algorithms_test)
 algorithms_test(
   test_list
   test_multithreading
+  test_matrix
+  test_multiple_dispatch
 )
